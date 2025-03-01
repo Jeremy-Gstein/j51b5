@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <!-- Primary Meta Tags -->
+    <title>Seems Good | US - Stormrage</title>
+    <meta name="title" content="Jeremy Grosenstein | j51b5.com" />
+    <meta name="description" content="TODO" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!--Javascript to change theme on button press -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const themeToggleButton = document.getElementById("theme-toggle");
+        const htmlElement = document.documentElement;
+        const icon = themeToggleButton.querySelector("i");
+
+        // Load saved theme from localStorage
+        const savedTheme = localStorage.getItem("theme");
+
+        if (savedTheme) {
+          htmlElement.classList.add(savedTheme);
+        } else {
+          // Check OS theme and apply it if no saved theme
+          if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+            htmlElement.classList.add("theme-light");
+          } else {
+            htmlElement.classList.add("theme-dark");
+          }
+        }
+
+        // Set the correct icon on page load
+        updateIcon();
+
+        themeToggleButton.addEventListener("click", () => {
+          if (htmlElement.classList.contains("theme-dark")) {
+            htmlElement.classList.replace("theme-dark", "theme-light");
+            localStorage.setItem("theme", "theme-light");
+          } else {
+            htmlElement.classList.replace("theme-light", "theme-dark");
+            localStorage.setItem("theme", "theme-dark");
+          }
+          updateIcon();
+        });
+
+        function updateIcon() {
+          if (htmlElement.classList.contains("theme-dark")) {
+            icon.classList.remove("fa-moon");
+            icon.classList.add("fa-sun");
+          } else {
+            icon.classList.remove("fa-sun");
+            icon.classList.add("fa-moon");
+          }
+        }
+      });
+    </script>
+    <!-- close notification -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const notification = document.querySelector(".notification");
+        const deleteButton = document.querySelector(".notification .delete");
+
+        // Check localStorage if notification was dismissed
+        if (localStorage.getItem("notificationClosed") === "true") {
+          notification.style.display = "none"; // Hide notification if it was closed
+        }
+
+        if (deleteButton) {
+          deleteButton.addEventListener("click", () => {
+            notification.style.display = "none"; // Hide it visually
+            localStorage.setItem("notificationClosed", "true"); // Save state
+          });
+        }
+      });
+    </script>
+    <!-- navbar-buger (mobile clients)-->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+        $navbarBurgers.forEach(el => {
+          el.addEventListener('click', () => {
+            const target = el.dataset.target;
+            const $target = document.getElementById(target);
+            el.classList.toggle('is-active');
+            $target.classList.toggle('is-active');
+          });
+        });
+      });
+    </script>
+
+  </head>
+<!-- start of navbar -->
+<nav class="navbar is-spaced has-shadow is-dark" role="navigation" aria-label="main navigation">
+  <!-- Burger button for mobile -->
+  <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarData">
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+  </a>
+
+  <!-- Navbar menu -->
+  <div id="navbarData" class="navbar-menu">
+    <div class="navbar-start">
+      <div class="navbar-item">
+        <a class="button is-primary" href="/"><strong>Home</strong></a>
+      </div>
+   <!-- Navbar end (for right-aligned buttons) -->
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <button id="theme-toggle" class="button is-primary">
+            <span class="icon">
+              <i class="fas fa-moon"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+</nav>
+
+<body>
+    <main> 
+      <!--Start of Page Content -->        
+      <section>
+        {% block content %}{% endblock %}
+      </section>
+    </main>
+  </body>
+  <!--Start of Footer -->
+  <footer class="footer">
+    <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="/">Home</a></li>
+      </ul>
+    </nav>
+    <div class="content has-text-centered is-small">
+      <p>
+      <strong>Jeremy Grosenstein (j51b5)</strong> The source code for this website can be viewed via this <a href="https://github.com/Jeremy-Gstein/j51b5_com"> Github Repository. </a>
+      </p>
+    </div>
+  </footer>
+</html>
