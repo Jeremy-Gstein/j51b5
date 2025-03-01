@@ -1,4 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
-<h1> $content </h1> 
+<body>
+	<div class="box has-text-centered">
+		<h1 class="title"> Testing Single Page Application </h1> 
+		<div class="subtitle" id="content"> {{ content }} </div>
+		<button class="button is-large" hx-get="/1" hx-target="#content">Change</button>
+		<button class="button is-large" hx-get="/2" hx-target="#content">Undo</button>
+		</div>
+	</div>
+</body>
 {% endblock %}
