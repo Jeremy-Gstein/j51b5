@@ -1,12 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
 <body>
-	<div class="box has-text-centered">
-		<h1 class="title"> Testing Single Page Application </h1> 
-		<div class="subtitle" id="content"> {{ content }} </div>
-		<button class="button is-large" hx-get="/1" hx-target="#content">Change</button>
-		<button class="button is-large" hx-get="/2" hx-target="#content">Undo</button>
-		</div>
-	</div>
+  <div class="box has-text-centered"> </div>
+		<h1 class="title"> Jeremy Grosenstein | j51b5.com </h1> 
+		<div class="box" id="content"> {{ content|safe }} </div>
+    <div class="box has-text-centered">
+		<button class="button is-large" hx-get="/1" hx-target="#content" hx-swap="innerHTML" hx-push-url="true">Change</button>
+    <button class="button is-large" hx-get="/2" hx-target="#content" hx-swap="innerHTML" hx-push-url="true">Undo</button>
+    <button class="button is-large" hx-get="/about" hx-target="#content" hx-swap="innerHTML" hx-push-url="true">About</button>
+    </div>
 </body>
 {% endblock %}

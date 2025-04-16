@@ -5,7 +5,7 @@ edition = "2021"
 authors = [ "jg <j51b5@pm.me>" ]
 
 [package.metadata.release]
-release = true
+release = false
 
 # https://github.com/rustwasm/wasm-pack/issues/1247
 [package.metadata.wasm-pack.profile.release]
@@ -26,5 +26,5 @@ axum  = { version = "0.7", default-features = false }
 tower-service = "0.3.2"
 console_error_panic_hook = { version = "0.1.1" }
 include_dir = "0.7.4"
-askama_axum = "0.4.0"
-askama = "0.12.1"
+askama = "0.13.0"
+comrak = "0.38.0"

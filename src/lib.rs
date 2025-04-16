@@ -1,22 +1,26 @@
-use axum::{routing::get, 
-    Router, 
-    response::Redirect}; 
+use axum::{response::Redirect, routing::get, Router}; 
 use tower_service::Service;
 use worker::*;
 use axum::response::Html;
 use include_dir::{include_dir, Dir};
-use askama_axum::Template;
+use askama::Template;
+use comrak::{markdown_to_html, markdown_to_html_with_plugins, ComrakOptions, ComrakPlugins};
 
 
 static _TEMPLATES_DIR: Dir = include_dir!("templates");
 
+
+
 fn router() -> Router {
     Router::new() 
         .route("/", get(home_page))
-        .route("/1", get(click_add))
+        .route("/about", get(about_page))
+        .route("/1", get(fragment_handler))
         .route("/2", get(click_undo))
         .fallback(Redirect::permanent("/"))
 }
+
+
 // Main entry point for Cloudflare Worker
 #[event(fetch)]
 async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<axum::http::Response<axum::body::Body>> {
@@ -24,32 +28,67 @@ async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<axum::http:
     Ok(router().call(req).await?)
 }
 
+
+/// Extends layout.html (navbar and footer)
 #[derive(Template)]
 #[template(path = "index.html")]
 struct IndexTemplate {
     content: String,
 } 
 
-const CONTENT: &str  = "We are the original text!";
+/// Does not extend layout.html
+#[derive(Template)]
+#[template(path = "content_fragment.html")]
+struct ContentFragmentTemplate {
+    content: String,
+} 
 
-async fn home_page() -> Html<String> {
-
-    let text = &CONTENT;
-    let template = IndexTemplate { content: text.to_string() }; 
-    let rendered = template.render().unwrap();
+async fn about_page() -> Html<String> {
+    let md = include_str!("../templates/md/original.md");
+    let mut options = ComrakOptions::default();
+    options.extension.strikethrough = true;
+    options.extension.table = true;
+    options.extension.autolink = true;
+    options.render.github_pre_lang = true;
     
-    Html(rendered)
+    let plugins = ComrakPlugins::default();
+   
+    let html = markdown_to_html_with_plugins(md, &options, &plugins);
+    let highlight_all = r#"<script>hljs.highlightAll();</script>"#;
+    let highlight_html = format!("{}\n{}", highlight_all, &html);
+
+    let template = ContentFragmentTemplate { content: highlight_html };
+    Html(template.render().unwrap())
 }
 
-async fn click_add() -> Html<String> {
-    let text = "We are not the same!"; 
-    let rendered = format!("<h1>{}</h1>", text.to_string());
-    Html(rendered)
+
+async fn fragment_handler() -> Html<String> {
+    let md = "## Dynamic Markdown!";
+    let html = markdown_to_html(md, &ComrakOptions::default());
+    let template = ContentFragmentTemplate { content: html };
+    Html(template.render().unwrap())
 }
+
+
+
+
+const CONTENT: &str  = include_str!("../templates/md/home.md");
+async fn home_page() -> Html<String> {
+    let mut options = ComrakOptions::default();
+    options.extension.strikethrough = true;
+    options.extension.table = true;
+    options.extension.autolink = true;
+
+    let html = markdown_to_html(&CONTENT, &options);
+    let template = IndexTemplate { content: html }; 
+    Html(template.render().unwrap())
+}
+
+
 
 async fn click_undo() -> Html<String> {
-    let text = &CONTENT;
-    let rendered = format!("<h1>{}</h1>", text.to_string());
+    let options = ComrakOptions::default();
+    let rendered = format!("{}", markdown_to_html(&CONTENT, &options)); 
     Html(rendered)
 
 }
