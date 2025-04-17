@@ -3,7 +3,7 @@
 ## This is a h2
 
 
-### THis is a h3!
+### This is a h3!
 
 
 `echo this is a codeblock!`

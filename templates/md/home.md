@@ -5,8 +5,6 @@
 ---
 
 hello!
-> [!NOTE]
-> hello o/
 
 - [ ] iiii
 - [ ] aaaa
@@ -18,3 +16,4 @@ hello!
 
 
 :tada:
+:smile:

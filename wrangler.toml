@@ -9,3 +9,4 @@ command = "cargo install -q worker-build && worker-build --release"
 enabled = true
 head_sampling_rate = 1
 invocation_logs = true
+

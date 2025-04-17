@@ -6,17 +6,19 @@ use include_dir::{include_dir, Dir};
 use askama::Template;
 use comrak::{markdown_to_html, markdown_to_html_with_plugins, ComrakOptions, ComrakPlugins};
 
+mod mdext; // set static options.extensions for ComrakOptions
 
 static _TEMPLATES_DIR: Dir = include_dir!("templates");
+const HOME_MD: &str = include_str!("../templates/md/home.md");
+const ABOUT_MD: &str = include_str!("../templates/md/about.md");
 
 
-
+/// Set logical routes to content
 fn router() -> Router {
     Router::new() 
         .route("/", get(home_page))
         .route("/about", get(about_page))
-        .route("/1", get(fragment_handler))
-        .route("/2", get(click_undo))
+        .route("/home", get(content_home))
         .fallback(Redirect::permanent("/"))
 }
 
@@ -29,7 +31,7 @@ async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<axum::http:
 }
 
 
-/// Extends layout.html (navbar and footer)
+/// Extends layout.html (navbar, buttons and footer)
 #[derive(Template)]
 #[template(path = "index.html")]
 struct IndexTemplate {
@@ -38,60 +40,41 @@ struct IndexTemplate {
 
 /// Does not extend layout.html
 #[derive(Template)]
-#[template(path = "content_fragment.html")]
-struct ContentFragmentTemplate {
+#[template(path = "content_template.html")]
+struct ContentTemplate {
     content: String,
 } 
 
 async fn about_page() -> Html<String> {
-    let md = include_str!("../templates/md/original.md");
+    let md = &ABOUT_MD;
     let mut options = ComrakOptions::default();
-    options.extension.strikethrough = true;
-    options.extension.table = true;
-    options.extension.autolink = true;
-    options.render.github_pre_lang = true;
-    
+    crate::mdext::enable_extensions(&mut options);
     let plugins = ComrakPlugins::default();
-   
     let html = markdown_to_html_with_plugins(md, &options, &plugins);
+    // slight hack to run highlight.js when this content is loaded.
     let highlight_all = r#"<script>hljs.highlightAll();</script>"#;
     let highlight_html = format!("{}\n{}", highlight_all, &html);
-
-    let template = ContentFragmentTemplate { content: highlight_html };
-    Html(template.render().unwrap())
-}
-
-
-async fn fragment_handler() -> Html<String> {
-    let md = "## Dynamic Markdown!";
-    let html = markdown_to_html(md, &ComrakOptions::default());
-    let template = ContentFragmentTemplate { content: html };
+    let template = ContentTemplate { content: highlight_html };
     Html(template.render().unwrap())
 }
 
 
 
-const CONTENT: &str  = include_str!("../templates/md/home.md");
+
 async fn home_page() -> Html<String> {
     let mut options = ComrakOptions::default();
-    options.extension.strikethrough = true;
-    options.extension.table = true;
-    options.extension.autolink = true;
-    options.extension.shortcodes = true;
-    options.extension.tasklist = true;
-
-    let html = markdown_to_html(&CONTENT, &options);
+    crate::mdext::enable_extensions(&mut options); 
+    let html = markdown_to_html(&HOME_MD, &options);
     let template = IndexTemplate { content: html }; 
     Html(template.render().unwrap())
 }
 
 
 
-async fn click_undo() -> Html<String> {
-    let options = ComrakOptions::default();
-    let rendered = format!("{}", markdown_to_html(&CONTENT, &options)); 
-    Html(rendered)
-
+async fn content_home() -> Html<String> {
+    let mut options = ComrakOptions::default();
+    crate::mdext::enable_extensions(&mut options);
+    let html = markdown_to_html(&HOME_MD, &options);
+    let template = ContentTemplate { content: html };
+    Html(template.render().unwrap())
 }
-
-
