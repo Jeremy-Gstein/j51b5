@@ -27,4 +27,4 @@ tower-service = "0.3.2"
 console_error_panic_hook = { version = "0.1.1" }
 include_dir = "0.7.4"
 askama = "0.13.0"
-comrak = "0.38.0"
+comrak = { version = "0.38.0", features = ["emojis", "shortcodes"] }

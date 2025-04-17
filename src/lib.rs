@@ -71,13 +71,14 @@ async fn fragment_handler() -> Html<String> {
 
 
 
-
 const CONTENT: &str  = include_str!("../templates/md/home.md");
 async fn home_page() -> Html<String> {
     let mut options = ComrakOptions::default();
     options.extension.strikethrough = true;
     options.extension.table = true;
     options.extension.autolink = true;
+    options.extension.shortcodes = true;
+    options.extension.tasklist = true;
 
     let html = markdown_to_html(&CONTENT, &options);
     let template = IndexTemplate { content: html }; 
