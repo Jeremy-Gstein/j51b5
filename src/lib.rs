@@ -36,6 +36,7 @@ async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<axum::http:
 #[template(path = "index.html")]
 struct IndexTemplate {
     content: String,
+    content_box: bool,
 } 
 
 /// Does not extend layout.html
@@ -45,6 +46,40 @@ struct ContentTemplate {
     content: String,
 } 
 
+/// used as '/' to init page OR fallback
+/// include IndexTemplate with navbar, footer, meta tags.
+/// use in router:
+/// ```rust
+/// Router::new().route("/", get(home_page))
+/// ```
+async fn home_page() -> Html<String> {
+    let mut options = ComrakOptions::default();
+    crate::mdext::enable_extensions(&mut options); 
+    let html = markdown_to_html(&HOME_MD, &options);
+    let template = IndexTemplate { content: html, content_box: true }; 
+    Html(template.render().unwrap())
+}
+
+
+/// Loads home.md, content_template.html.
+/// use in router:
+/// ```rust
+/// Router::new().route("/home", get(content_home))
+/// ```
+async fn content_home() -> Html<String> {
+    let mut options = ComrakOptions::default();
+    crate::mdext::enable_extensions(&mut options);
+    let html = markdown_to_html(&HOME_MD, &options);
+    let template = ContentTemplate { content: html };
+    Html(template.render().unwrap())
+}
+
+
+/// Loads about.md with ContentTemplate
+/// use in router:
+/// ```rust
+/// Router::new().route("/about", get(about_page))
+/// ```
 async fn about_page() -> Html<String> {
     let md = &ABOUT_MD;
     let mut options = ComrakOptions::default();
@@ -55,26 +90,5 @@ async fn about_page() -> Html<String> {
     let highlight_all = r#"<script>hljs.highlightAll();</script>"#;
     let highlight_html = format!("{}\n{}", highlight_all, &html);
     let template = ContentTemplate { content: highlight_html };
-    Html(template.render().unwrap())
-}
-
-
-
-
-async fn home_page() -> Html<String> {
-    let mut options = ComrakOptions::default();
-    crate::mdext::enable_extensions(&mut options); 
-    let html = markdown_to_html(&HOME_MD, &options);
-    let template = IndexTemplate { content: html }; 
-    Html(template.render().unwrap())
-}
-
-
-
-async fn content_home() -> Html<String> {
-    let mut options = ComrakOptions::default();
-    crate::mdext::enable_extensions(&mut options);
-    let html = markdown_to_html(&HOME_MD, &options);
-    let template = ContentTemplate { content: html };
     Html(template.render().unwrap())
 }

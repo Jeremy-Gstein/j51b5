@@ -1,12 +1,43 @@
 {% extends "layout.html" %}
+
 {% block content %}
-<body>
-  <div class="box has-text-centered"> 
-  <h1 class="title"> Jeremy Grosenstein | j51b5.com </h1> </div>
-		<div class="box" id="content"> {{ content|safe }} </div>
-    <div class="box has-text-centered">
-		<button class="button is-large" hx-get="/home" hx-target="#content" hx-swap="innerHTML" hx-push-url="true">Home</button>
-    <button class="button is-large" hx-get="/about" hx-target="#content" hx-swap="innerHTML" hx-push-url="true">About</button>
+{% if content_box %}
+<div class="card" style="max-width: 460px; margin: 8vh auto 0 auto;">
+  <div class="card-content">
+    <div class="has-text-centered">
+      <figure class="image is-128x128" style="margin: 0 auto;">
+        <img class="is-rounded" src="https://cdn.j51b5.com/content/profile.jpg" alt="Photo of Jeremy on a trail in massachusetts" />
+      </figure>
+      <p class="title is-4" style="margin-top: 0.5rem;">Jeremy Grosenstein</p>
     </div>
+  </div>
+  <div class="card-footer">
+    <!-- GitHub -->
+    <a class="card-footer-item" href="https://github.com/Jeremy-Gstein" target="_blank" rel="noopener">
+      <i class="fa-brands fa-github fa-2x"></i>
+    </a>
+    <!-- LinkedIn -->
+    <a class="card-footer-item" href="https://linkedin.com/in/jeremy51b5" target="_blank" rel="noopener">
+      <i class="fa-brands fa-linkedin fa-2x"></i>
+    </a>
+    <!-- Email -->
+    <a class="card-footer-item" href="mailto:jeremy51b5@pm.me">
+      <i class="fa-solid fa-envelope fa-2x"></i>
+    </a>
+    <!-- Mastodon -->
+    <a class="card-footer-item" href="https://infosec.exchange/@shodo" target="_blank" rel="me noopener">
+      <i class="fa-brands fa-mastodon fa-2x"></i>
+    </a>
+  </div>
+</div>
+{% endif %}
+
+<body>
+    <div class="block has-text-centered" style="margin: 2vh auto 0 auto;">
+      <button class="button is-large" hx-get="/home" hx-target="#content" hx-swap="innerHTML" hx-push-url="true">Home</button>
+      <button class="button is-large" hx-get="/about" hx-target="#content" hx-swap="innerHTML" hx-push-url="true">About</button>
+    </div>
+    <div id="content"> {{ content|safe }} </div>
+
 </body>
 {% endblock %}

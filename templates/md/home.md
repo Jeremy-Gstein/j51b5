@@ -6,14 +6,9 @@
 
 hello!
 
-- [ ] iiii
-- [ ] aaaa
-- [ ] lll
-- [ ] llll
-- [ ] ll
-
-
-
+- [ ] :dog:
+- [ ] :crab:
+- [ ] :cat:
 
 :tada:
 :smile:

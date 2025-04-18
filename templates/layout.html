@@ -4,8 +4,8 @@
   <head>
     <meta charset="utf-8">
     <!-- Primary Meta Tags -->
-    <title>Jeremy Grosenstein | j51b5.com </title>
-    <meta name="title" content="Jeremy Grosenstein | j51b5.com" />
+    <title>Jeremy | j51b5.com </title>
+    <meta name="title" content="Jeremy | j51b5.com" />
     <meta name="description" content="TODO" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/styles/default.min.css">
@@ -83,53 +83,31 @@
         }
       });
     </script>
-    <!-- navbar-buger (mobile clients)-->
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-        $navbarBurgers.forEach(el => {
-          el.addEventListener('click', () => {
-            const target = el.dataset.target;
-            const $target = document.getElementById(target);
-            el.classList.toggle('is-active');
-            $target.classList.toggle('is-active');
-          });
-        });
-      });
-    </script>
-
   </head>
   <!-- wrapper -->
     <!-- start of navbar -->
     <nav class="navbar has-shadow is-dark" role="navigation" aria-label="main navigation">
-      <!-- Burger button for mobile -->
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarData">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-
+      
       <!-- Navbar menu -->
-      <div id="navbarData" class="navbar-menu">
+      <div class="navbar-brand">
         <div class="navbar-start">
           <div class="navbar-item">
-            <a class="button is-primary" href="/"><strong>Home</strong></a>
+            <a class="button is-primary" href="/"><strong>j51b5.com</strong></a>
           </div>
         </div>
-          <!-- Navbar end (for right-aligned buttons) -->
-          <div class="navbar-end">
-            <div class="navbar-item">
-              <div class="buttons">
-                <button id="theme-toggle" class="button is-primary">
-                  <span class="icon">
-                    <i class="fas fa-moon"></i>
-                  </span>
-                </button>
-              </div>
-            </div>
+      </div>
+      <!-- Navbar end (for right-aligned buttons) -->
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="buttons">
+            <button id="theme-toggle" class="button is-primary">
+              <span class="icon">
+                <i class="fas fa-moon"></i>
+              </span>
+            </button>
           </div>
+        </div>
+      </div>
     </nav>
 
     <body>
@@ -148,7 +126,7 @@
         </nav>
         <div class="content has-text-centered is-small">
           <p>
-          <strong>Jeremy Grosenstein (j51b5)</strong> The source code for this website can be viewed via this <a href="https://github.com/Jeremy-Gstein/j51b5_com"> Github Repository. </a>
+          <strong>Jeremy Grosenstein (j51b5)</strong> The source code for this website can be viewed via this <a href="https://github.com/Jeremy-Gstein/j51b5"> Github Repository. </a>
           </p>
         </div>
       </footer>
