@@ -10,11 +10,9 @@ printf "hello!\n"
 ```
 >>>
 
-
-### This is a h3!
-
-
+# /usr/bin/bash
 `echo this is a codeblock!`
+# /usr/bin/bash
 `echo idk?`
 
 ----------
