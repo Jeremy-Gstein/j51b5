@@ -1,7 +1,6 @@
 name = "prod-j51b5"
 main = "build/worker/shim.mjs"
 compatibility_date = "2025-04-02"
-preview_urls = true
 
 [build]
 command = "cargo install -q worker-build && worker-build --release"
