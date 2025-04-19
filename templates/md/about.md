@@ -1,6 +1,14 @@
-# Hello from markdown!
-
+# `echo $WHOAMI` 
 ## This is a h2
+
+>>>
+idk what this does?
+`#here is 1 line`
+```bash
+echo "hello!"
+printf "hello!\n"
+```
+>>>
 
 
 ### This is a h3!

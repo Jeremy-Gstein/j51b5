@@ -8,7 +8,7 @@
     <meta name="title" content="Jeremy | j51b5.com" />
     <meta name="description" content="TODO" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.j51b5.com/content/highlightjs-11.9.0-default.min.css">
+    <link rel="stylesheet" href="https://cdn.j51b5.com/content/atom-one-dark-min.css" />
     <script src="https://cdn.j51b5.com/content/highlight.min.js"></script>
     <link rel="stylesheet" href="https://cdn.j51b5.com/content/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -30,6 +30,20 @@
       main {
         flex: 1 0 auto;
       }
+      /* CSS glue for html/markdown codeblocks */
+      .has-text-centered pre, .has-text-centered code {
+        max-width: 700px;
+        width: 100%;
+        text-align: left;  /* Keep text left-aligned */
+        display: block;
+        margin-left: auto; /* Center the block */
+        margin-right: auto; /* Center the block */
+        overflow-x: auto;
+        white-space: pre;
+        box-sizing: border-box;
+        padding: 1em;
+        border-radius: 10px;
+      }
 
       footer.footer {
         flex-shrink: 0;
@@ -37,7 +51,6 @@
         text-align: center;
       }
     </style>
-
     <!--Javascript to change theme on button press -->
     <script>
       document.addEventListener("DOMContentLoaded", () => {
@@ -87,7 +100,7 @@
   </head>
   <!-- wrapper -->
     <!-- start of navbar -->
-    <nav class="navbar has-shadow is-dark" role="navigation" aria-label="main navigation">
+    <nav class="navbar has-shadow is-dark is-flex is-justify-content-space-between" role="navigation" aria-label="main navigation">
       
       <!-- Navbar menu -->
       <div class="navbar-brand">
@@ -122,7 +135,7 @@
       <footer class="footer">
         <nav class="breadcrumb is-centered" aria-label="breadcrumbs">
           <ul>
-            <li><a href="/">Home</a></li>
+            <li><a href="/">j51b5.com</a></li>
           </ul>
         </nav>
         <div class="content has-text-centered is-small">

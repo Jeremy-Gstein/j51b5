@@ -38,7 +38,7 @@
       <button class="button is-large" hx-get="/home" hx-target="#content" hx-swap="innerHTML" hx-push-url="false">Home</button>
       <button class="button is-large" hx-get="/about" hx-target="#content" hx-swap="innerHTML" hx-push-url="false">About</button>
     </div>
-    <div id="content"> {{ content|safe }} </div>
+    <div class="block has-text-centered" style="margin: 2vh auto 0 auto;" id="content"> {{ content|safe }} </div>
 
 </body>
 {% endblock %}
