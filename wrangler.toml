@@ -3,6 +3,7 @@ main = "build/worker/shim.mjs"
 compatibility_date = "2024-08-02"
 
 [build]
+preview_urls = true
 command = "cargo install -q worker-build && worker-build --release"
 
 [observability.logs]
