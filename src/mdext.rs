@@ -17,7 +17,6 @@ pub fn enable_extensions(options: &mut ComrakOptions) {
     options.extension.description_lists = true;
     options.extension.greentext = true;
     options.extension.superscript = true;
-    options.extension.multiline_block_quotes = true;
     options.extension.subscript = true;
     options.extension.spoiler = true;
 }
