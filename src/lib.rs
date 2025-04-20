@@ -11,6 +11,7 @@ mod mdext; // set static options.extensions for ComrakOptions
 static _TEMPLATES_DIR: Dir = include_dir!("templates");
 const HOME_MD: &str = include_str!("../templates/md/home.md");
 const ABOUT_MD: &str = include_str!("../templates/md/about.md");
+const RESUME_MD: &str = include_str!("../templates/md/resume.md");
 
 
 /// Set logical routes to content
@@ -18,6 +19,7 @@ fn router() -> Router {
     Router::new() 
         .route("/", get(home_page))
         .route("/about", get(about_page))
+        .route("/resume", get(resume_page))
         .route("/home", get(content_home))
         .fallback(Redirect::permanent("/"))
 }
@@ -90,5 +92,22 @@ async fn about_page() -> Html<String> {
     let highlight_all = r#"<script>hljs.highlightAll();</script>"#;
     let highlight_html = format!("{}\n{}", highlight_all, &html);
     let template = ContentTemplate { content: highlight_html };
+    Html(template.render().unwrap())
+}
+
+
+
+/// Loads about.md with ContentTemplate
+/// use in router:
+/// ```rust
+/// Router::new().route("/resume", get(about_page))
+/// ```
+async fn resume_page() -> Html<String> {
+    let md = &RESUME_MD;
+    let mut options = ComrakOptions::default();
+    crate::mdext::enable_extensions(&mut options);
+    let plugins = ComrakPlugins::default();
+    let html = markdown_to_html_with_plugins(md, &options, &plugins);
+    let template = ContentTemplate { content: html };
     Html(template.render().unwrap())
 }
