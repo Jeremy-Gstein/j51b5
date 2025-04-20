@@ -39,8 +39,15 @@
       <!-- dont push url.. going to /home loads raw markdown this is intended for later use in markdown reader -->
       <button class="button is-large" hx-get="/home" hx-target="#content" hx-swap="innerHTML" hx-push-url="false">Home</button>
       <button class="button is-large" hx-get="/about" hx-target="#content" hx-swap="innerHTML" hx-push-url="false">About</button>
+      <button class="button is-large" hx-get="/resume" hx-target="#content" hx-swap="innerHTML" hx-push-url="false">Resume</button>
+
     </div>
-    <div class="block has-text-centered" style="margin: 2vh auto 0 auto;" id="content"> {{ content|safe }} </div>
+    <div class="block is-flex is-flex-direction-column is-align-items-center" 
+          style="margin: 2vh auto 0 auto;" id="content"> 
+      <div class="block">
+        {{ content|safe }} 
+      </div>
+    </div>
 
 </body>
 {% endblock %}
