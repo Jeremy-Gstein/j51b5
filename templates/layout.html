@@ -30,6 +30,7 @@
       main {
         flex: 1 0 auto;
       }
+<<<<<<< Updated upstream
       /* CSS glue for html/markdown codeblocks */
       .has-text-centered pre, .has-text-centered code {
         max-width: 700px;
@@ -43,6 +44,26 @@
         box-sizing: border-box;
         padding: 1em;
         border-radius: 10px;
+=======
+      pre {
+        border: none !important;
+        padding: 0 !important;
+        overflow-x: auto; /* Enable horizontal scrolling */
+        display: block;    /* respects the block formatting rules */
+        background-color: transparent; /*Remove pre background color*/
+      }
+      code {
+        border: none !important;
+        padding: 0 !important;
+        background-color: transparent; /*remove inline code block background*/
+      }
+      @keyframes blink {
+        0%,to{opacity:1}50%{opacity:0}
+      }
+      .cursor-blink {
+        display:inline-block;
+        animation:blink 1s step-end infinite;
+>>>>>>> Stashed changes
       }
 
       footer.footer {
