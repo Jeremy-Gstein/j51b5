@@ -12,7 +12,12 @@ pub fn enable_extensions(options: &mut ComrakOptions) {
     options.extension.table = true;
     options.extension.autolink = true;
     options.extension.shortcodes = true;
-    options.extension.tasklist = true;
+    options.extension.underline = true;
+    options.extension.description_lists = true;
+    options.extension.greentext = true;
+    options.extension.superscript = true;
+    options.extension.subscript = true;
+    options.extension.spoiler = true;
 }
 
 
