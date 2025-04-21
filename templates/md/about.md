@@ -1,14 +1,16 @@
-# :caution: About Page is Work-in-progress
+# :warning: About Page is Work-in-progress :warning:
+
+---
+
 ```bash
 echo "hello!"
 printf "hello!\n"
 ```
 
-
 ---
 
 # This webpage was built with Rust! :crab:
-## an example of how resume is formated to the website.
+### an example of how resume is formated to the website.
 
 ```rust
 async fn resume_page() -> Html<String> {
@@ -20,5 +22,4 @@ async fn resume_page() -> Html<String> {
     Html(template.render().unwrap())
 }
 ```
-
 ---
