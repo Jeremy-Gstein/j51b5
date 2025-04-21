@@ -6,17 +6,14 @@
     <!-- Primary Meta Tags -->
     <title>Jeremy | j51b5.com </title>
     <meta name="title" content="Jeremy | j51b5.com" />
-    <meta name="description" content="TODO" />
+    <meta name="description" content="Personal Webpage with links to resume, socials, code projects" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.j51b5.com/content/atom-one-dark-min.css" />
     <script src="https://cdn.j51b5.com/content/highlight.min.js"></script>
     <link rel="stylesheet" href="https://cdn.j51b5.com/content/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.j51b5.com/content/htmx.min.js"></script>
-
-
     <style>
-
       html, body {
         height: 100%;
         margin: 0;
@@ -30,29 +27,24 @@
       main {
         flex: 1 0 auto;
       }
-      /* CSS glue for html/markdown codeblocks */
-      .has-text-centered pre, .has-text-centered code {
-        max-width: 700px;
-        width: 100%;
-        text-align: left;  /* Keep text left-aligned */
-        display: block;
-        margin-left: auto; /* Center the block */
-        margin-right: auto; /* Center the block */
+      pre {
+        border: none !important;
+        padding: 0 !important;
         overflow-x: auto;
-        white-space: pre;
-        box-sizing: border-box;
-        padding: 1em;
-        border-radius: 10px;
+        display: block;
+        background-color: transparent;
       }
-
+      code {
+        border: none !important;
+        padding: 0 !important;
+      }
       @keyframes blink {
         0%,to{opacity:1}50%{opacity:0}
       }
       .cursor-blink {
         display:inline-block;
-        animation:blink 1s step-end infinite
+        animation:blink 1s step-end infinite;
       }
-
       footer.footer {
         flex-shrink: 0;
         padding: 1.5rem 1rem;
