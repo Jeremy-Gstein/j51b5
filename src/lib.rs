@@ -21,6 +21,7 @@ fn router() -> Router {
         .route("/home", get(content_home))
         .route("/about", get(about_page))
         .route("/resume", get(resume_page))
+        .route("/alt", get(alt_page))
         .fallback(Redirect::permanent("/"))
 }
 
@@ -107,5 +108,26 @@ async fn resume_page() -> Html<String> {
     crate::mdext::enable_extensions(&mut options);
     let html = markdown_to_html(md, &options);
     let template = ContentTemplate { content: html };
+    Html(template.render().unwrap())
+}
+
+
+/// Loads google doc version in an iframe
+/// use in route:
+/// ```rust
+/// Route::new().route("/alt", get(alt_page))
+/// ```
+async fn alt_page() -> Html<String> {
+    let mut options = ComrakOptions::default();
+    crate::mdext::enable_extensions(&mut options);
+    let raw_html = r#"
+        <iframe
+            width="100%"
+            height="100%"
+            style="border: none;"
+            title="Jeremy's Resume Google Doc"
+            src="https://docs.google.com/document/d/e/2PACX-1vStq85F8GrnQKq990ujlCCwWkwYCx7PzGc6bu4MlLEOZ3y-hV_fM8hM6W52jvS5-HBLPLJUGtqOqxwz/pub" 
+        ></iframe>"#;
+    let template = IndexTemplate { content: raw_html.to_string(), content_box: false };
     Html(template.render().unwrap())
 }

@@ -66,4 +66,4 @@ Showcased ARP spoofing risks
 
 *References available upon request*
 
-last update: ${CURRENT_MONTH}-${CURRENT_YEAR}
+[view as pdf](/alt)
