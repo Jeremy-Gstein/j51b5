@@ -13,7 +13,6 @@ const HOME_MD: &str = include_str!("../templates/md/home.md");
 const ABOUT_MD: &str = include_str!("../templates/md/about.md");
 const RESUME_MD: &str = include_str!("../templates/md/resume.md");
 
-
 /// Set logical routes to content
 fn router() -> Router {
     Router::new() 
@@ -21,17 +20,16 @@ fn router() -> Router {
         .route("/home", get(content_home))
         .route("/about", get(about_page))
         .route("/resume", get(resume_page))
+        .route("/alt", get(alt_page))
         .fallback(Redirect::permanent("/"))
 }
 
-
-// Main entry point for Cloudflare Worker
+/// Main entry point for Cloudflare Worker
 #[event(fetch)]
 async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<axum::http::Response<axum::body::Body>> {
     console_error_panic_hook::set_once();
     Ok(router().call(req).await?)
 }
-
 
 /// Extends layout.html (navbar, buttons and footer)
 #[derive(Template)]
@@ -39,6 +37,7 @@ async fn fetch(req: HttpRequest, _env: Env, _ctx: Context) -> Result<axum::http:
 struct IndexTemplate {
     content: String,
     content_box: bool,
+    button_box: bool,
 } 
 
 /// Does not extend layout.html
@@ -58,10 +57,9 @@ async fn home_page() -> Html<String> {
     let mut options = ComrakOptions::default();
     crate::mdext::enable_extensions(&mut options); 
     let html = markdown_to_html(&HOME_MD, &options);
-    let template = IndexTemplate { content: html, content_box: true }; 
+    let template = IndexTemplate { content: html, content_box: true, button_box: true }; 
     Html(template.render().unwrap())
 }
-
 
 /// Loads home.md, content_template.html.
 /// use in router:
@@ -75,7 +73,6 @@ async fn content_home() -> Html<String> {
     let template = ContentTemplate { content: html };
     Html(template.render().unwrap())
 }
-
 
 /// Loads about.md with ContentTemplate
 /// use in router:
@@ -94,8 +91,6 @@ async fn about_page() -> Html<String> {
     Html(template.render().unwrap())
 }
 
-
-
 /// Loads about.md with ContentTemplate
 /// use in router:
 /// ```rust
@@ -107,5 +102,31 @@ async fn resume_page() -> Html<String> {
     crate::mdext::enable_extensions(&mut options);
     let html = markdown_to_html(md, &options);
     let template = ContentTemplate { content: html };
+    Html(template.render().unwrap())
+}
+
+/// Loads google doc version in an iframe
+/// use in route:
+/// ```rust
+/// Route::new().route("/alt", get(alt_page))
+/// ```
+async fn alt_page() -> Html<String> {
+    let mut options = ComrakOptions::default();
+    crate::mdext::enable_extensions(&mut options);
+    let raw_html = r#"
+    </div>
+    <div class=container is-center>
+        <a class="button is-large" href="/">Home</a>
+        <a class="button is-large" href="https://cdn.j51b5.com/content/pfd-may-2025-JG-Resume.pdf">Download as PDF</a>
+        <iframe
+            src="https://docs.google.com/document/d/e/2PACX-1vStq85F8GrnQKq990ujlCCwWkwYCx7PzGc6bu4MlLEOZ3y-hV_fM8hM6W52jvS5-HBLPLJUGtqOqxwz/pub?embedded=true"
+            width="100%"
+            height="1000"
+            marginheight="0"
+            marginwidth="0"
+        ></iframe>
+    </div>
+    "#;
+    let template = IndexTemplate { content: raw_html.to_string(), content_box: false, button_box: false };
     Html(template.render().unwrap())
 }
