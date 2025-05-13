@@ -33,7 +33,7 @@
   </div>
 </div>
 {% endif %}
-
+{% if button_box %}
 <body>
     <div class="block has-text-centered" style="margin: 2vh auto 0 auto;">
       <!-- dont push url.. going to /home loads raw markdown this is intended for later use in markdown reader -->
@@ -42,6 +42,7 @@
       <button class="button is-large" hx-get="/resume" hx-target="#content" hx-swap="innerHTML" hx-push-url="false">Resume</button>
 
     </div>
+{% endif %}
     <div class="block is-flex is-flex-direction-column is-align-items-center" 
          style="margin: 2vh auto 0 auto;" id="content"> 
       <div class="block">
