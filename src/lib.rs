@@ -13,7 +13,6 @@ const HOME_MD: &str = include_str!("../templates/md/home.md");
 const ABOUT_MD: &str = include_str!("../templates/md/about.md");
 const RESUME_MD: &str = include_str!("../templates/md/resume.md");
 
-
 /// Set logical routes to content
 fn router() -> Router {
     Router::new() 
